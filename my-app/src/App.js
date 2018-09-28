@@ -4,9 +4,17 @@ import './App.css';
 import { Button, Container, Row, Col,
    InputGroup, InputGroupAddon, InputGroupText, Input,
    Form, FormGroup, Label, FormText,CardTitle,CardText,
-   TabContent, TabPane, Nav, NavItem, NavLink, Card }
+   TabContent, TabPane, Nav, NavItem, NavLink, Card,
+   Dropdown, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
+   CardBody, CardSubtitle }
       from 'reactstrap';
 import classnames from 'classnames';
+import DropdownReact from 'react-dropdown';
+import 'react-dropdown/style.css';
+const defaultOption = options[0];
+const options = [
+  'one', 'two', 'three'
+];
 
 
 class App extends React.Component
@@ -16,16 +24,24 @@ class App extends React.Component
     super(props);
     this.toggle=this.toggle.bind(this);
     this.state={
-      activeTab:'1'
+      activeTab:'1',
+      dropdownOpen:false
     };
   }
-  toggle(tab) {
+  toggle(tab)
+  {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
       });
     }
+    /*
+    this.setState(prevState =>({
+      dropdownOpen:!prevState.dropdownOpen
+    }));
+    */
   }
+
   render()
   {
     return (
@@ -36,6 +52,7 @@ class App extends React.Component
         </header>
         <p className="App-intro">
         <Container>
+
         <Nav tabs>
           <NavItem>
             <NavLink
@@ -54,6 +71,7 @@ class App extends React.Component
             </NavLink>
           </NavItem>
         </Nav>
+
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
           <Form>
@@ -61,18 +79,70 @@ class App extends React.Component
 
               </FormGroup>
               <FormGroup>
-                <Label>Full Name</Label>
-                <Input type="text" name="fullname" id="exampleFullname"
+                <Label for="createjobFullname">Full Name</Label>
+                <Input type="text" name="fullname" id="createjobFullname"
                   placeholder="Enter your full name here"/>
               </FormGroup>
               <FormGroup>
-                <Label>Email</Label>
-                <Input type="email" name="email" id="exampleEmail"
+                <Label for="createjobEmail">Email</Label>
+                <Input type="email" name="email" id="createjobEmail"
                   placeholder="example@example.com" />
+              </FormGroup>
+              <FormGroup>
+                <Card outline color="secondary">
+                  <CardBody >
+                    <FormGroup row >
+                      <Label for="createjobHouseNo" sm={2}>House No:</Label>
+                      <Col sm={10}>
+                        <Input name="houseNo" id="createjobHouseNo"
+                          placeholder="" />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row >
+                      <Label for="createjobStreet" sm={2}>Street:</Label>
+                      <Col sm={10}>
+                        <Input name="street" id="createjobStreet"
+                          placeholder="" />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row >
+                      <Label for="createjobCity" sm={2}>City:</Label>
+                      <Col sm={10}>
+                        <Input name="city" id="createjobCity"
+                          placeholder="" />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row >
+                      <Label for="createjobCountry" sm={2}>Country:</Label>
+                      <Col sm={10}>
+                        <UncontrolledDropdown>
+                          <DropdownToggle caret>
+                            Select Your Country
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <DropdownItem>Afghanistan</DropdownItem>
+                            <DropdownItem>Albania</DropdownItem>
+                            <DropdownItem>Algeria</DropdownItem>
+                            <DropdownItem>Andorra</DropdownItem>
+                            <DropdownItem>Angola</DropdownItem>
+                            <DropdownItem>Anguilla</DropdownItem>
+                            <DropdownItem>Antigua & Barbuda</DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup>
+                    <DropdownReact options={options} onChange={this.onSelect} value={defaultOption} placeholder="Select an option" />
+                    </FormGroup>
+                  </CardBody>
+                </Card>
               </FormGroup>
             </Form>
             </TabPane>
+            <TabPane tabId="2">
+            </TabPane>
           </TabContent>
+
         </Container>
         </p>
       </div>
